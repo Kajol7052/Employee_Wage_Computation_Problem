@@ -25,12 +25,21 @@ function getWorkingHours(){
                 echo $WORKING_HOURS
 }
 
+function getEmpWages()
+{
+        WORKING_HOURS=$1
+        echo $(($WORKING_HOURS*$EMP_RATE_PER_HOUR))
+
+}
+
 while [[ $NUMBER_OF_HOURS_WORKED -le $MAX_HOURS_IN_MONTH && $NUMBER_OF_DAYS_WORKED -le $WORKING_DAY_IN_A_MONTH ]]   #UC-6 Updated wages based on hours and days
 do
 	RANDOM_CHECK=$((1+RANDOM%2))
 	(( NUMBER_OF_DAYS_WORKED++ ))
-	WORKING_HOUR=$( getWorkingHours $RANDOM_CHECK )
-	NUMBER_OF_HOURS_WORKED=$(($NUMBER_OF_HOURS_WORKED+$WORKING_HOUR))
+	WORKING_HOURS=$( getWorkingHours $RANDOM_CHECK )
+	NUMBER_OF_HOURS_WORKED=$(($NUMBER_OF_HOURS_WORKED+$WORKING_HOURS))
+	dailyWages[$NUMBER_OF_DAYS_WORKED]=$(getEmpWages $WORKING_HOURS)
 done
 MONTHLY_WAGE=$((NUMBER_OF_HOURS_WORKED*EMP_RATE_PER_HOUR)) #UC-5 Added Monthly wage logic
 echo "Monthly Wages : $MONTHLY_WAGE"
+echo "Daily Wages: ${dailyWages[@]}"
