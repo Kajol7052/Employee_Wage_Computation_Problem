@@ -11,14 +11,14 @@ EMP_RATE_PER_HOUR=20
 FULL_TIME=8
 PART_TIME=4
 RANDOM_CHECK=$((1+RANDOM%2))
-if [[ $RANDOM_CHECK -eq  1 ]]
-then
-	WORKING_HOUR=$FULL_TIME
-else
-	WORKING_HOUR=$PART_TIME
-fi
+case "$RANDOM_CHECK" in
+1) WORKING_HOUR=$FULL_TIME
+;;
+2) WORKING_HOUR=$PART_TIME
+;;
+esac
 DAILY_WAGE=$((EMP_RATE_PER_HOUR*WORKING_HOUR))
 echo "Daily Wages : $DAILY_WAGE"
 
 #UC-3 Add Part time Employee and Wage
-
+#UC-4 Add Switch case statment for daily wage
